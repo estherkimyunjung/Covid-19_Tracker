@@ -1,3 +1,16 @@
 * {
   margin: 0;
 }
+
+.app_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.app_status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
