@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import numeral from "numeral";
 
@@ -37,7 +37,7 @@ const options = {
           display: false,
         },
         ticks: {
-          //Include a dallar sign in the ticks
+          // Include a dollar sign in the ticks
           callback: function (value, index, values) {
             return numeral(value).format("0a");
           },
@@ -47,13 +47,12 @@ const options = {
   },
 };
 
-const buildChartData = (data, casesType = "cases") => {
+const buildChartData = (data, casesType) => {
   let chartData = [];
   let lastDataPoint;
-
   for (let date in data.cases) {
     if (lastDataPoint) {
-      const newDataPoint = {
+      let newDataPoint = {
         x: date,
         y: data[casesType][date] - lastDataPoint,
       };
@@ -64,21 +63,23 @@ const buildChartData = (data, casesType = "cases") => {
   return chartData;
 };
 
-function LineGraph({ casesType = "cases" }) {
+function LineGraph({ casesType }) {
   const [data, setData] = useState({});
-
-  // 'https://disease.sh/v3/covid-19/historical/all?lastdays=120'
 
   useEffect(() => {
     const fetchData = async () => {
       await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
-        .then((response) => response.json())
+        .then((response) => {
+          return response.json();
+        })
         .then((data) => {
-          // console.log("Graph", data);
-          let chartData = buildChartData(data, "cases");
+          let chartData = buildChartData(data, casesType);
           setData(chartData);
+          console.log(chartData);
+          // buildChart(chartData);
         });
     };
+
     fetchData();
   }, [casesType]);
 
@@ -86,7 +87,6 @@ function LineGraph({ casesType = "cases" }) {
     <div>
       {data?.length > 0 && (
         <Line
-          options={options}
           data={{
             datasets: [
               {
@@ -96,6 +96,7 @@ function LineGraph({ casesType = "cases" }) {
               },
             ],
           }}
+          options={options}
         />
       )}
     </div>
