@@ -44,6 +44,7 @@ const App = () => {
             name: country.country,
             value: country.countryInfo.iso2,
           }));
+
           let sortedData = sortData(data);
           setCountries(countries);
           setMapCountries(data);
@@ -54,7 +55,7 @@ const App = () => {
     getCountriesData();
   }, []);
 
-  console.log(casesType);
+  // console.log("Country Type",casesType);
 
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
@@ -72,6 +73,8 @@ const App = () => {
         setMapZoom(4);
       });
   };
+
+  // console.log("Country Info", countryInfo);
 
   return (
     <div className="app">
