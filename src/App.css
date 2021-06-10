@@ -35,7 +35,14 @@ body {
 }
 
 .app__left {
-  flex: 0.9;
+  flex: 0.75;
+}
+
+.app__right {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  flex: 0.25;
 }
 
 .app__information > h3 {
