@@ -16,8 +16,8 @@ import Map from "./Map";
 import "leaflet/dist/leaflet.css";
 
 const App = () => {
-  const [country, setInputCountry] = useState("worldwide");
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [mapCountries, setMapCountries] = useState([]);
   const [tableData, setTableData] = useState([]);
@@ -67,7 +67,7 @@ const App = () => {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setInputCountry(countryCode);
+        setCountry(countryCode);
         setCountryInfo(data);
         setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
         setMapZoom(4);
