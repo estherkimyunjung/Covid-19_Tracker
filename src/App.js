@@ -60,18 +60,24 @@ const App = () => {
   const onCountryChange = async (e) => {
     const countryCode = e.target.value;
 
-    const url =
-      countryCode === "worldwide"
-        ? "https://disease.sh/v3/covid-19/all"
-        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setCountry(countryCode);
-        setCountryInfo(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(4);
-      });
+    // const url =
+    countryCode === "worldwide"
+      ? await fetch("https://disease.sh/v3/covid-19/all")
+          .then((response) => response.json())
+          .then((data) => {
+            setCountry(countryCode);
+            setCountryInfo(data);
+            setMapCenter([34.80746, -40.479]);
+            setMapZoom(3);
+          })
+      : await fetch(`https://disease.sh/v3/covid-19/countries/${countryCode}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setCountry(countryCode);
+            setCountryInfo(data);
+            setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+            setMapZoom(4);
+          });
   };
 
   // console.log("Country Info", countryInfo);
